@@ -11,7 +11,6 @@ onMounted(() => {
 
 <template>
   <div class="wrapper" v-if="authStore().isAuth">
-    <h2 style="color: black">hello</h2>
     <RouterView  />
   </div>
   <Auth v-else/>

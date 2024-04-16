@@ -1,7 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
-export const authStore = defineStore('counter', () => {
+export const authStore = defineStore('auth', () => {
     const isAuth = ref(false)
     const userData= {
         login: 'login',

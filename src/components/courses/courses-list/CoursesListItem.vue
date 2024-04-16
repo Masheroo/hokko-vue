@@ -16,7 +16,7 @@ onMounted(()=>{
     <div class="content">
       <h3>Python-разработчик</h3>
       <p class="description">{{ description }}</p>
-      <a href="#">Перейти</a>
+      <RouterLink :to="{name: 'Concrete Course'}">Перейти</RouterLink>
     </div>
   </div>
 </template>

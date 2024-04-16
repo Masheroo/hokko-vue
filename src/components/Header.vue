@@ -1,15 +1,10 @@
 <script setup>
 import router from "@/router/index.js";
-
-function isMainPage () {
-  return router.currentRoute.value.fullPath === '/'
-}
-
 </script>
 
 <template>
   <header>
-    <a class="previous-icon" href="#" v-if="!isMainPage">
+    <a @click="router.back()" class="previous-icon" v-if="!(router.currentRoute.value.fullPath === '/')">
       <img src="@/assets/img/Vector.svg" alt="vector">
     </a>
 

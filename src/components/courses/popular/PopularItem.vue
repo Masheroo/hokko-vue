@@ -9,7 +9,7 @@ defineProps({
     <img src="@/assets/img/test-image.jpg" alt="test-image">
     <div class="popular-card-content">
       <h3>Карьерный box {{n}}</h3>
-      <a href="#">Перейти</a>
+      <RouterLink :to="{name: 'Concrete Course'}">Перейти</RouterLink>
     </div>
   </div>
 </template>

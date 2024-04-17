@@ -26,22 +26,6 @@ h4
   @include patterns.gradient
   background-attachment: fixed
 
-.hljs
-  background-color: transparent !important
-
-.hljs-ln-numbers
-  color: #797599 !important
-  padding-right: 1em !important
-pre
-  font-size: 29px
-
-.hljs-ln
-
-  tbody
-    tr
-      td.hljs-ln-code
-        padding: .5em 2em .5em 0
-        background-color: rgba(0, 0, 0, 0.26) !important
 body
   margin: 0
   padding: 0
@@ -50,51 +34,3 @@ body
   color: white
 
 
-.lesson-wrapper
-  min-height: 100vh
-  color: white
-  padding-bottom: 5%
-
-  .lesson-title
-    width: 100%
-    @include patterns.cover-background-image("../img/title-background.png")
-
-    .content
-      display: grid
-      grid: auto-flow / 8fr 2fr
-      padding: 2em 5%
-      width: 90%
-      align-items: center
-      justify-items: stretch
-      backdrop-filter: blur(50px)
-      background-color: rgba(44, 44, 44, .4)
-
-      h1
-        font-weight: 500
-        font-size: 50px
-
-      img
-        max-height: 10vh
-        height: 80%
-
-  .content
-    width: 90%
-    padding: 0 5%
-
-  .btn-wrapper
-    display: flex
-    justify-content: center
-    margin: 5vh 0
-
-    button
-      color: white
-      background-color: rgba(155, 155, 155, .15)
-      margin: 0 auto
-      padding: .75em 1.5em
-      font-size: 40px
-      border: 4px solid white
-      border-radius: 40px
-
-      &.finished
-        color: #3cff3c
-        border-color: #3cff3c

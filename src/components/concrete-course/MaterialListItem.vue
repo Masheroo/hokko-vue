@@ -5,7 +5,7 @@
 <template>
   <div class="list-item">
     <img src="@/assets/img/file-icon.svg" alt="icon">
-    <a href="#" class="list-title">Почему этот курс?</a>
+    <RouterLink :to="{name: 'Lesson'}" class="list-title">Почему этот курс?</RouterLink>
     <div class="time">06:26</div>
   </div>
 </template>

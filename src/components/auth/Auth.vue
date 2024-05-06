@@ -1,13 +1,29 @@
 <script setup>
 import {ref} from "vue";
 import {authStore} from "@/stores/auth.js";
+import axios from 'axios'
 
-const login = ref('');
-const password = ref('');
+const loginInput = ref('');
+const passwordInput = ref('');
+
+const errorDiv = ref(null)
 
 function tryLogin(event){
   event.preventDefault()
-  authStore().login(login.value, password.value)
+  login(loginInput.value, passwordInput.value)
+}
+
+function login(login, password) {
+  axios.post('/login', {
+    username: login,
+    password: password
+  })
+    .then(function(response) {
+      authStore().setToken(response.data.token)
+    })
+    .catch((error)=>{
+      errorDiv.value = error.response.data.message;
+    })
 }
 
 </script>
@@ -23,13 +39,15 @@ function tryLogin(event){
 
       <label>
         Логин
-        <input type="text" name="login" v-model="login">
+        <input type="text" name="login" v-model="loginInput">
       </label>
 
       <label>
         Пароль
-        <input type="password" name="password" v-model="password">
+        <input type="password" name="password" v-model="passwordInput">
       </label>
+
+      <p v-if="errorDiv" style="color: red">{{errorDiv}}</p>
 
       <button @click="tryLogin">Войти</button>
 

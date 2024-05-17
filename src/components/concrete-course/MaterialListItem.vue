@@ -1,12 +1,14 @@
 <script setup>
-
+defineProps({
+  lesson: Object
+})
 </script>
 
 <template>
   <div class="list-item">
     <img src="@/assets/img/file-icon.svg" alt="icon">
-    <RouterLink :to="{name: 'Lesson'}" class="list-title">Почему этот курс?</RouterLink>
-    <div class="time">06:26</div>
+    <RouterLink :to="{name: 'Lesson'}" class="list-title">{{ lesson.title }}</RouterLink>
+    <div class="time">{{ lesson.duration ?? '00:00' }}</div>
   </div>
 </template>
 

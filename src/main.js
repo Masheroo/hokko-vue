@@ -21,7 +21,6 @@ app.use(router)
 app.mount('#app')
 
 
-axios.defaults.baseURL = 'http://localhost:8080/api'
+axios.defaults.baseURL = 'https://hokko-courses.ru/api'
 axios.defaults.headers.common['Content-Type'] = 'application/json'
-axios.defaults.headers.common['Accept'] = 'application/json'
 axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('token')

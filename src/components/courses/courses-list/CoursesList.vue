@@ -1,6 +1,9 @@
 <script setup>
-
 import CoursesListItem from "@/components/courses/courses-list/CoursesListItem.vue";
+
+defineProps({
+  courses: Object
+})
 </script>
 
 <template>
@@ -9,7 +12,7 @@ import CoursesListItem from "@/components/courses/courses-list/CoursesListItem.v
 
     <div class="wrapper">
 
-      <CoursesListItem v-for="n in 10" />
+      <CoursesListItem v-for="course in courses" :key="course.id" :course="course" />
     </div>
   </div>
 </template>

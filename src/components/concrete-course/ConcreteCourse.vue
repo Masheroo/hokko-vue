@@ -1,48 +1,67 @@
 <script setup>
 
-import Header from "@/components/Header.vue";
-import MaterialList from "@/components/concrete-course/MaterialList.vue";
+import Header from '@/components/Header.vue'
+import MaterialList from '@/components/concrete-course/MaterialList.vue'
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import axios from 'axios'
+import Loader from '@/components/Loader.vue'
+
+const router = useRoute()
+
+const course = ref(null)
+const courseBlocks = ref(null)
+
+onMounted(() => {
+  axios.get('/course/' + router.params.id)
+    .then((response) => {
+      course.value = response.data
+    })
+    .catch(error => console.log(error))
+
+  axios.get('/course/' + router.params.id + '/blocks')
+    .then((response) => {
+      courseBlocks.value = response.data
+      console.log(response.data)
+    })
+    .catch(error => console.log(error))
+})
 </script>
 
 <template>
   <div class="concrete-course-wrapper background-gradient min-vh-100">
+    <Header />
 
-    <Header/>
+    <div v-if="course" class="loader-wrapper">
 
-    <div class="course-title">
-      <div class="content">
-        <h1>Python-разработчик</h1>
-        <img src="@/assets/img/logo.svg" alt="logo">
+
+      <div class="course-title">
+        <div class="content">
+          <h1>{{ course.title }}</h1>
+          <img src="@/assets/img/logo.svg" alt="logo">
+        </div>
+      </div>
+
+      <div class="about">
+        <h2>Об этом курсе</h2>
+        <p>{{ course.description }}</p>
+      </div>
+
+      <div class="skills">
+        <div class="content">
+          <h2>В этом выпуске мы узнаем о</h2>
+          <div v-html="course.skills"></div>
+        </div>
+      </div>
+
+      <div v-if="!!courseBlocks" class="materials">
+        <div class="content">
+          <h2>Материалы курса</h2>
+          <MaterialList v-for="courseBlock in courseBlocks" :courseBlock="courseBlock" :key="courseBlock.id" />
+        </div>
       </div>
     </div>
-
-    <div class="about">
-      <h2>Об этом курсе</h2>
-      <p>Вы хотите стать PHP-разработчиком? Тогда эта серия скринкастов для вас! Мы научимся разрабатывать с помощью
-        PHP с самого начала, на реальном проекте, а также будем выполнять упражнения по программированию на
-        протяжении всего скринкаста.</p>
-    </div>
-
-    <div class="skills">
-      <div class="content">
-        <h2>В этом выпуске мы узнаем о</h2>
-        <ul>
-          <li>создание вашего первого PHP-файла</li>
-          <li>использование функций</li>
-          <li>переменные</li>
-          <li>циклы и операторы if</li>
-          <li>чтение и обновление файлов</li>
-          <li>обработка JSON</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="materials">
-      <div class="content">
-        <h2>Материалы курса</h2>
-        <MaterialList v-for="n in 5"/>
-      </div>
-    </div>
+    <Loader v-else />
   </div>
 </template>
 

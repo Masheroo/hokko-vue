@@ -22,7 +22,7 @@ function login(login, password) {
       authStore().setToken(response.data.token)
     })
     .catch((error)=>{
-      errorDiv.value = error.response.data.message;
+      errorDiv.value = error;
     })
 }
 

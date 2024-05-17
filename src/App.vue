@@ -16,5 +16,7 @@ onMounted(() => {
   <Auth v-else/>
 </template>
 
-<style scoped>
+<style lang="sass" scoped>
+.wrapper
+  position: relative
 </style>

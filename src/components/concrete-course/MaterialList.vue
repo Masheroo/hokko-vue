@@ -2,6 +2,10 @@
 import MaterialListItem from "@/components/concrete-course/MaterialListItem.vue";
 import {onMounted} from "vue";
 
+defineProps({
+  courseBlock: Object
+})
+
 onMounted(() => {
   let materialLists = document.querySelectorAll('.material-list')
 
@@ -28,13 +32,13 @@ onMounted(() => {
   <div class="material-list">
     <div class="title">
       <img src="@/assets/img/list-arrow.svg" alt="arrow">
-      <h4>Подготовка к работе</h4>
-      <div class="count">5 лекций</div>
+      <h4>{{ courseBlock.name }}</h4>
+      <div class="count">{{ courseBlock.lessons.length + ' лекций' }}</div>
       <div class="dot">&#183;</div>
       <div class="time">1 ч 12 мин</div>
     </div>
     <div class="list">
-      <MaterialListItem v-for="n in 10" />
+      <MaterialListItem v-for="lesson in courseBlock.lessons" :lesson="lesson" :key="lesson.id" />
     </div>
   </div>
 </template>

@@ -12,14 +12,16 @@ const router = createRouter({
       component: Courses
     },
     {
-      path: '/concrete-course',
+      path: '/concrete-course/:id',
       name: 'Concrete Course',
-      component: ConcreteCourse
+      component: ConcreteCourse,
+      props: true
     },
     {
-      path: '/concrete-course/lesson',
+      path: '/lesson/:id',
       name: 'Lesson',
-      component: Lesson
+      component: Lesson,
+      props: true
     }
   ]
 })

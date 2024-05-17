@@ -1,12 +1,30 @@
 <script setup>
 import hljs from 'highlight.js'
-import {onMounted} from "vue";
-import Header from "@/components/Header.vue";
+import { onMounted, ref } from 'vue'
+import Header from '@/components/Header.vue'
+import { useRoute } from 'vue-router'
+import Loader from '@/components/Loader.vue'
+import axios from 'axios'
 
-onMounted(()=>{
+defineProps({
+  lesson: Object
+})
+
+const router = useRoute()
+
+const lesson = ref()
+
+onMounted( async () => {
+
+  await axios.get('/lesson/' + router.params.id)
+    .then(response => {
+      console.log(response.data)
+      lesson.value = response.data
+    })
+    .catch(error => console.log(error))
 
   const pre = document.querySelectorAll('pre')
-  pre.forEach((element)=>{
+  pre.forEach((element) => {
     element.classList.add('theme-ir-black-min')
   })
 
@@ -16,62 +34,38 @@ onMounted(()=>{
 
 <template>
   <div class="lesson-wrapper background-gradient min-vh-100">
-    <Header/>
+    <Header />
+    <div v-if="lesson">
+      <div class="lesson-title">
+        <div class="content">
+          <h1>{{ lesson.orderNumber + '. ' + lesson.title }}</h1>
+          <img src="@/assets/img/logo.svg" alt="logo">
+        </div>
+      </div>
+<!--      <pre>-->
+<!--    <code>-->
+<!--    const highlightedCode = hljs.highlight(-->
+<!--      '<span>Hello World!</span>',-->
+<!--      { language: 'xml' }-->
+<!--    ).value-->
+<!--        </code>-->
+<!--    </pre>-->
+      <div v-html="lesson.text" class="content"></div>
 
-    <div class="lesson-title">
-      <div class="content">
-        <h1>1. Настройка приложения Symfony</h1>
-        <img src="@/assets/img/logo.svg" alt="logo">
+      <div class="btn-wrapper">
+        <button>
+          Отметить как пройденый
+        </button>
+        <button class="finished">
+          Пройдено
+        </button>
       </div>
     </div>
-
-    <div class="content">
-      <h2>Configuring in the Kernel</h2>
-      <p>
-        Symfony applications define a kernel class (which is located by default at src/Kernel.php) that includes
-        several configurable options.
-        This article explains how to configure those options and shows the list of container parameters created by
-        Symfony based on that configuration.
-      </p>
-
-<pre>
-    <code>
-const highlightedCode = hljs.highlight(
-  '<span>Hello World!</span>',
-  { language: 'xml' }
-).value
-    </code>
-</pre>
-
-      <p>Since the container.build_time value will change every time you compile the application, the build will not
-        be strictly reproducible. If you care about this, the solution is to use another container parameter called
-        kernel.container_build_time and set it to a non-changing build time to achieve a strict reproducible
-        build:</p>
-<pre class="theme-ir-black-min">
-    <code>
-computed: {
-  currentRouteName() {
-      return this.$route.name;
-  }
-}
-    </code>
-</pre>
-    </div>
-
-    <div class="btn-wrapper">
-      <button>
-        Отметить как пройденый
-      </button>
-      <button class="finished">
-        Пройдено
-      </button>
-    </div>
-
+    <Loader v-else />
   </div>
-
 </template>
 
-<style scoped lang="sass">
+<style lang="sass">
 @use "@/assets/css/patterns"
 
 .hljs
@@ -80,9 +74,11 @@ computed: {
 .hljs-ln-numbers
   color: #797599 !important
   padding-right: 1em !important
+
 pre
   code.hljs
     padding: 0 1em !important
+
 .hljs-ln
   tbody
     tr

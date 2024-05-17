@@ -1,22 +1,26 @@
 <script setup>
-import {onMounted, ref} from "vue";
+import {onMounted} from "vue";
+import { routerKey } from 'vue-router'
 
-const description = ref('Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab consequuntur dicta, hic iusto modi necessitatibus neque reprehenderit, tenetur, veritatis vitae voluptate voluptatum?')
+defineProps({
+  course: Object
+})
 
 onMounted(()=>{
-  if (description.value.length > 100){
-    description.value = description.value.slice(0,100) + '...'
-  }
+  // if (course.description || course.description.length > 100){
+  //   course.description = course.description.slice(0,100) + '...'
+  // }
 })
 </script>
 
 <template>
   <div class="course">
-    <img src="@/assets/img/test-image.jpg" alt="img">
+    <img v-if="course.previewLink != null" :src="course.previewLink" alt="img">
+    <img v-else src="@/assets/img/test-image.jpg" alt="img">
     <div class="content">
-      <h3>Python-разработчик</h3>
-      <p class="description">{{ description }}</p>
-      <RouterLink :to="{name: 'Concrete Course'}">Перейти</RouterLink>
+      <h3>{{ course.title }}</h3>
+      <p class="description">{{ course.title }}</p>
+      <RouterLink :to="{name: 'Concrete Course', params: {id: course.id }}">Перейти</RouterLink>
     </div>
   </div>
 </template>
